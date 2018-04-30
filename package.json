@@ -1,0 +1,31 @@
+{
+  "name": "authdoc",
+  "version": "1.0.0",
+  "description": "System that allow manage the authorized login into different Daux.io sites.",
+  "main": "index.js",
+  "scripts": {
+    "build": "daux --destination=docs/static/ --format=html --source=./docs/docs/",
+    "serve:docs": "daux serve ",
+    "serve:dev": "NODE_ENV=development forever --append --uid temis_workflow_docs start server.js",
+    "serve:prod": "NODE_ENV=production forever --append --uid temis_workflow_docs start server.js",
+    "serve:stop": "forever stop -uid temis_workflow_docs",
+    "postinstall": ""
+  },
+  "author": "Melvin Sequera",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "compression": "^1.7.2",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.2.1",
+    "mongodb": "^3.0.7",
+    "mongoose": "^5.0.16",
+    "nconf": "^0.10.0",
+    "passport": "^0.4.0",
+    "passport-auth0": "^0.6.1"
+  }
+}
