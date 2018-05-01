@@ -17,6 +17,7 @@
                   <h5 class="title">Lista de Documentaciones</h5>
                   <!--<small class="msg">Por favor selecciona la documentación que desees ver en este momento:</small>-->
                   <div class="form-group form-float">
+                      <div class="input-group input-group-lg"> <span class="input-group-addon"> <i class="material-icons">folder</i> </span>
                       <div class="form-line">
                           <!--<select class="form-control show-tick">
                               <option>Seleccione una opción ...</option>  
@@ -31,13 +32,16 @@
                           <select class="form-control show-tick" #d (change)="onChange($event.target.value)">
                             <option *ngFor="let doc of docsAvailable" [value]="doc.url">{{doc.name}}</option>                          
                           </select>  
+                      </div>    
                     </div>
                   </div>
               </form>
               <div class="col-lg-12">
-                  <a (click)="onClick(this.data-url)" class="btn btn-raised btn-primary waves-effect">Ver la Documentación</a>
-                  <a href="logout/" class="btn btn-raised btn-danger waves-effect">Salir</a>
+                  <div class="span2">
+                  <a (click)="onClick(this.data-url)" class="btn btn-raised btn-primary waves-effect btn-block">Ver la Documentación</a>
+                  <a (click)="onClick('logout')" class="btn btn-raised btn-danger waves-effect btn-block">Salir</a>
                 </div>
+              </div>
           </div>
       </div>
   </div>

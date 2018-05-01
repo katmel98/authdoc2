@@ -9,6 +9,7 @@
     "serve:dev": "NODE_ENV=development forever --append --uid temis_workflow_docs start server.js",
     "serve:prod": "NODE_ENV=production forever --append --uid temis_workflow_docs start server.js",
     "serve:stop": "forever stop -uid temis_workflow_docs",
+    "start": "",
     "postinstall": ""
   },
   "author": "Melvin Sequera",

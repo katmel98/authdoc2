@@ -142,8 +142,36 @@ app.get('/logout',
     var doc = req.body.url;
     console.log(doc);
     res.redirect(doc);
-});
+  });
 
+  app.get('/documents',  
+  function(req, res) {
+
+    client.connect(uri, { auto_reconnect: true }, function (err, db) {
+        if (err) {
+            throw err;
+        } else if (!db) {
+            console.log('Unknown error connecting to database');
+        } else {
+            console.log('Connected to MongoDB database server at:');
+            console.log('\n\t%s\n', uri);
+
+            var dbo = db.db("authdoc");
+
+            dbo.collection("users")
+            .find(
+                {name: myuser}
+            ).toArray(
+                function(err, result){
+                    res.json(result);
+                }
+            );
+        }
+    });
+
+
+
+  });
 
 // Force authentication for the next routes.
 app.use(function(req, res, next) { 
