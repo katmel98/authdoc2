@@ -5,11 +5,27 @@ const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const bodyParser = require('body-parser');
 const path = require('path');
 var util = require('util');
 var mongodb = require('mongodb');
 var client = mongodb.MongoClient;
+
+var myuser;
   
+/** Data for connect into mongodb */
+var auth = {
+    user : '',
+    pass : '',
+    host : 'localhost',
+    port : '27017',
+    name : 'authdoc'
+}
+
+/** Create the uri object to be used to create the connection */
+var uri = util.format('mongodb://%s:%d/%s',
+    auth.host, auth.port, auth.name);
+
 // Initialize configuration.
 nconf.argv()  
   .env()
@@ -28,7 +44,10 @@ passport.use(new Auth0Strategy({
 
 // Initialize the app.
 const app = new express();  
-// Host the book.
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 console.log(nconf.get('DEFAULT_DOCS_DIRECTORY'));
 app.use(express.static(path.join(nconf.get('DEFAULT_DOCS_DIRECTORY'))));
 app.use(cookieParser());  
@@ -57,23 +76,10 @@ app.get('/login/callback',
   function(req, res, user) {
     req.session.save(function( err ){
         //console.log(req.user.displayName);
-        let myuser = req.user.displayName;
-
-        /** Data for connect into mongodb */
-        var auth = {
-            user : '',
-            pass : '',
-            host : 'localhost',
-            port : '27017',
-            name : 'authdoc'
-        }
+        myuser = req.user.displayName;
 
         //var uri = util.format('mongodb://%s:%s@%s:%d/%s',
         //    auth.user, auth.pass, auth.host, auth.port, auth.name);
-
-        /** Create the uri object to be used to create the connection */
-        var uri = util.format('mongodb://%s:%d/%s',
-            auth.host, auth.port, auth.name);
 
         /** Connect to the Mongo database at the URI using the client */
         client.connect(uri, { auto_reconnect: true }, function (err, db) {
@@ -102,9 +108,10 @@ app.get('/login/callback',
                                 let obj = result[0].documentation[0];
                                 res.redirect(obj.url);     
                             }else if(result[0].documentation.length > 1){
+                                console.log(result[0]);
                                 console.log("This user has multiple documentations options please select one.");
-                                app.use('/multiple', express.static(path.join(__dirname, '/frontend/dist')));
-                                res.redirect('/multiple');
+                                app.use('/', express.static(path.join(__dirname, '/frontend/dist')));
+                                res.redirect('/');
                             }
                         }else if (result.length>1){
                             console.log("There are TWO records for this user. This is not a correct conf, please call your administrator");
@@ -128,6 +135,15 @@ app.get('/logout',
     res.clearCookie('connect.sid');
     res.redirect('/login');
   });
+
+  app.post('/documents',  
+  function(req, res) {
+    app.use(express.static(path.join(nconf.get('DEFAULT_DOCS_DIRECTORY'))));
+    var doc = req.body.url;
+    console.log(doc);
+    res.redirect(doc);
+});
+
 
 // Force authentication for the next routes.
 app.use(function(req, res, next) { 

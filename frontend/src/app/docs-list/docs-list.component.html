@@ -1,0 +1,44 @@
+<div class="authentication">
+  <div class="card">
+      <div class="body">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="slideDown">
+                      <div class="logo"><img src="http://geddeontech.com/assets/geddeon_gmail_no_back.png" alt="GeddeonTech"></div>
+                      <!--<h1>Lista de Documentaciones</h1>-->
+                      <!--<ul class="list-unstyled l-social">
+                          <li><a href="javascript:void(0);"><i class="zmdi zmdi-facebook-box"></i></a></li>
+                          <li><a href="javascript:void(0);"><i class="zmdi zmdi-linkedin-box"></i></a></li>                            
+                          <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
+                      </ul>-->
+                  </div>                        
+              </div>                
+              <form class="col-lg-12" id="sign_in" method="POST">
+                  <h5 class="title">Lista de Documentaciones</h5>
+                  <!--<small class="msg">Por favor selecciona la documentación que desees ver en este momento:</small>-->
+                  <div class="form-group form-float">
+                      <div class="form-line">
+                          <!--<select class="form-control show-tick">
+                              <option>Seleccione una opción ...</option>  
+                              <optgroup label="Generales">
+                                <option [(urlSelected)] (change)="onChange($event)">AuthDoc</option>
+                              </optgroup>
+                              <optgroup label="Temis Workflow">
+                                <option [(urlSelected)] (change)="onChange($event)">Temis Workflow Frontend</option>
+                                <option [(urlSelected)] (change)="onChange($event)">Temis Workflow Backend</option>
+                              </optgroup>
+                          </select>-->
+                          <select class="form-control show-tick" #d (change)="onChange($event.target.value)">
+                            <option *ngFor="let doc of docsAvailable" [value]="doc.url">{{doc.name}}</option>                          
+                          </select>  
+                    </div>
+                  </div>
+              </form>
+              <div class="col-lg-12">
+                  <a (click)="onClick(this.data-url)" class="btn btn-raised btn-primary waves-effect">Ver la Documentación</a>
+                  <a href="logout/" class="btn btn-raised btn-danger waves-effect">Salir</a>
+                </div>
+          </div>
+      </div>
+  </div>
+</div>
