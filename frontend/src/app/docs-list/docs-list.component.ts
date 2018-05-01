@@ -81,7 +81,7 @@ export class DocsListComponent implements OnInit {
                       console.log (err.status);
                       if (err.status === 200) {
                         window.location.href = err.url ;
-                      } else if (err.status === 404 ) {
+                      } else if ((err.status === 404 ) || (err.status === 0 )) {
                         swal({
                           type: 'error',
                           title: 'No encontrado',
