@@ -140,7 +140,7 @@ app.get('/logout',
   function(req, res) {
     app.use(express.static(path.join(nconf.get('DEFAULT_DOCS_DIRECTORY'))));
     var doc = req.body.url;
-    console.log(doc);
+    // console.log(doc);
     res.redirect(doc);
   });
 
@@ -163,7 +163,12 @@ app.get('/logout',
                 {name: myuser}
             ).toArray(
                 function(err, result){
+                    if(err){
+                        console.log(err);
+                        db.close();
+                    }
                     res.json(result);
+                    db.close();
                 }
             );
         }

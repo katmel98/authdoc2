@@ -14,7 +14,7 @@ export class DocsListComponent implements OnInit {
 
   urlSelected = '';
   docsAvailable = [
-    {name: 'Seleccione una opción ...', url: '', group: ''},
+    {name: 'Seleccione una opción ...', url: '', group: '', order: 0},
   ];
 
   constructor(private router: Router,
@@ -28,6 +28,16 @@ export class DocsListComponent implements OnInit {
     .then( res => {
       // console.log(res);
       const docs = res[0].documentation;
+
+      docs.sort((a, b) => {
+        if (a.order < b.order) {
+          return -1;
+        } else if (a.order > b.order) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
 
       docs.forEach(element => {
         this.docsAvailable.push(element);
@@ -50,14 +60,14 @@ export class DocsListComponent implements OnInit {
 
     // let headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-    if ( this.urlSelected === '' ) {
+   if ( url === 'logout') {
+      window.location.href = url ;
+    } else  if ( this.urlSelected === '' ) {
       swal({
         type: 'error',
         title: 'Falta de selección',
         text: 'Para ir a la documentación, es necesario seleccionar una opción en la lista de opciones'
       });
-    } else if ( url === 'logout') {
-      window.location.href = url ;
     } else {
       params.url = this.urlSelected;
 
