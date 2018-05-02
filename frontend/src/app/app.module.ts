@@ -9,6 +9,9 @@ import { DocsListComponent } from './docs-list/docs-list.component';
 import { DocsListItemComponent } from './docs-list-item/docs-list-item.component';
 import { FormsModule } from '@angular/forms';
 
+import { Logger } from './logger.service';
+import { DocumentationService } from './documentation.service';
+
 const appRoutes: Routes = [
   { path: '',
     component: DocsListComponent,
@@ -31,7 +34,10 @@ const appRoutes: Routes = [
       {enableTracing: true}
     )
   ],
-  providers: [],
+  providers: [
+    Logger,
+    DocumentationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

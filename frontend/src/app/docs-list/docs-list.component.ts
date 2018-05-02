@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import swal from 'sweetalert2';
+import { DocumentationService } from '../documentation.service';
 
 @Component({
   selector: 'app-docs-list',
@@ -19,46 +20,54 @@ export class DocsListComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private documentationService: DocumentationService) { }
 
   ngOnInit() {
 
-    this.http.get('documents')
-    .toPromise()
-    .then( res => {
-      // console.log(res);
-      const docs = res[0].documentation;
-
-      docs.sort((a, b) => {
-        if (a.order < b.order) {
-          return -1;
-        } else if (a.order > b.order) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      docs.forEach(element => {
-        this.docsAvailable.push(element);
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-
-
+    this.getDocs();
   }
 
-  onClick(url: string): void {
+  getDocs() {
+
+    this.documentationService.getDocs()
+    .subscribe(
+      data => {
+        // console.log(data);
+
+        const docs = data[0].documentation;
+
+        docs.sort((a, b) => {
+          if (a.order < b.order) {
+            return -1;
+          } else if (a.order > b.order) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        docs.forEach(element => {
+          this.docsAvailable.push(element);
+        });
+
+      },
+      err => {
+        console.error(err);
+      },
+      () => {
+        // console.log('done loading docs');
+      }
+    );
+  }
+
+  onClick (url: string): void {
 
     console.log(this.urlSelected);
     const result = '';
     const params = {
       url: ''
     };
-
-    // let headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
    if ( url === 'logout') {
       window.location.href = url ;
@@ -71,28 +80,25 @@ export class DocsListComponent implements OnInit {
     } else {
       params.url = this.urlSelected;
 
-      this.http.post('documents', params)
-                    .toPromise()
-                    .then( res => {
-                      console.log(JSON.stringify(res));
-                    })
-                    .catch(err => {
-                      console.log(err);
-                      console.log (err.status);
-                      if (err.status === 200) {
-                        window.location.href = err.url ;
-                      } else if ((err.status === 404 ) || (err.status === 0 )) {
-                        swal({
-                          type: 'error',
-                          title: 'No encontrado',
-                          text: 'La documentación seleccionada no existe, hable con el administrador del sistema.'
-                        });
-                      } else {
-                        console.log('Se ha rpesentado un error no posible de gestionar');
-                      }
+      this.documentationService.selectDocsAddress(this.urlSelected)
+      .then(
+        docs => {
+          console.log(docs);
+        },
+        error => {
+          if (error.status === 200) {
+            window.location.href = error.url ;
+          } else if ((error.status === 404 ) || (error.status === 0 )) {
+            swal({
+              type: 'error',
+              title: 'No encontrado',
+              text: 'La documentación seleccionada no existe, hable con el administrador del sistema.'
+            });
+          } else {
+            console.log('Se ha presentado un error no posible de gestionar');
+          }
 
-                    });
-
+        });
     }
 
   }
