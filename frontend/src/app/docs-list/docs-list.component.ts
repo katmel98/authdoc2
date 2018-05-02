@@ -110,7 +110,7 @@ export class DocsListComponent implements OnInit {
   }
 
   onChange(value) {
-    console.log(value);
+    // console.log(value);
     this.urlSelected = value;
   }
 }

@@ -4,13 +4,13 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="slideDown">
-                      <div class="logo"><img src="http://geddeontech.com/assets/geddeon_gmail_no_back.png" alt="GeddeonTech"></div>  
-                      <!--<h1>Lista de Documentaciones</h1>-->
+                      <div class="logo"><img src="assets/images/logo_card.png" alt="Auth Docs"></div>  
                       <!--<ul class="list-unstyled l-social">
                           <li><a href="javascript:void(0);"><i class="zmdi zmdi-facebook-box"></i></a></li>
                           <li><a href="javascript:void(0);"><i class="zmdi zmdi-linkedin-box"></i></a></li>                            
                           <li><a href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a></li>
-                      </ul>-->
+                      </ul>
+                      <br>-->
                   </div>                        
               </div>                
               <form class="col-lg-12" id="sign_in" method="POST">
@@ -19,16 +19,6 @@
                   <div class="form-group form-float">
                       <div class="input-group input-group-lg"> <span class="input-group-addon"> <i class="material-icons">folder</i> </span>
                       <div class="form-line">
-                          <!--<select class="form-control show-tick">
-                              <option>Seleccione una opción ...</option>  
-                              <optgroup label="Generales">
-                                <option [(urlSelected)] (change)="onChange($event)">AuthDoc</option>
-                              </optgroup>
-                              <optgroup label="Temis Workflow">
-                                <option [(urlSelected)] (change)="onChange($event)">Temis Workflow Frontend</option>
-                                <option [(urlSelected)] (change)="onChange($event)">Temis Workflow Backend</option>
-                              </optgroup>
-                          </select>-->
                           <select class="form-control show-tick" #d (change)="onChange($event.target.value)">
                               <optgroup *ngFor="let group of groups" label={{group}}>
                                     <ng-container *ngFor="let doc of docsAvailable">
@@ -42,7 +32,7 @@
               </form>
               <div class="col-lg-12">
                   <div class="span2">
-                  <a (click)="onClick(this.data-url)" class="btn btn-raised btn-primary waves-effect btn-block">Ver la Documentación</a>
+                  <a (click)="onClick(this.value)" class="btn btn-raised btn-primary waves-effect btn-block">Ver la Documentación</a>
                   <a (click)="onClick('logout')" class="btn btn-raised btn-danger waves-effect btn-block">Salir</a>
                 </div>
               </div>

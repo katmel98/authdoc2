@@ -181,6 +181,6 @@ app.listen(port, function(error) {
   if (error) {
     console.log(error);
   } else {
-    console.log('Listening on http://localhost:' + port);
+    console.log('Listening on ' + nconf.get('db:HOST') + ':' + port);
   }
 });

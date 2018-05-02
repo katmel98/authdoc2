@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import { Logger } from './logger.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -9,7 +10,9 @@ const httpOptions = {
 @Injectable()
 export class DocumentationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private logger: Logger) { }
 
   getDocs() {
     return this.http.get('documents');
@@ -26,11 +29,13 @@ export class DocumentationService {
     .toPromise()
     .then( res => {
       // console.log(JSON.stringify(res));
+      this.logger.log('Prueba del Log: desde el OK');
       return res;
     })
     .catch(err => {
       // console.log(err);
       // console.log (err.status);
+      this.logger.log('Prueba del Log: desde el ERROR');
       return Promise.reject(err);
     });
   }
