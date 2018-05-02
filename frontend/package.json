@@ -24,7 +24,7 @@
     "core-js": "^2.5.5",
     "hoek": "^4.2.1",
     "jasmine": "^3.1.0",
-    "rxjs": "^6.0.0",
+    "rxjs": "^5.5.10",
     "sweetalert2": "^7.19.2",
     "zone.js": "^0.8.26"
   },
@@ -46,6 +46,6 @@
     "protractor": "~5.3.1",
     "ts-node": "~6.0.2",
     "tslint": "~5.9.1",
-    "typescript": "~2.8.3"
+    "typescript": "^2.6.2"
   }
 }

@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { DocsListComponent } from './docs-list/docs-list.component';
-import { DocsListItemComponent } from './docs-list-item/docs-list-item.component';
 import { FormsModule } from '@angular/forms';
 
 import { Logger } from './logger.service';
@@ -23,7 +22,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     DocsListComponent,
-    DocsListItemComponent,
   ],
   imports: [
     BrowserModule,

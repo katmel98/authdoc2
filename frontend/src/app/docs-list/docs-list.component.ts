@@ -17,6 +17,7 @@ export class DocsListComponent implements OnInit {
   docsAvailable = [
     {name: 'Seleccione una opción ...', url: '', group: '', order: 0},
   ];
+  groups = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -26,6 +27,7 @@ export class DocsListComponent implements OnInit {
   ngOnInit() {
 
     this.getDocs();
+
   }
 
   getDocs() {
@@ -48,8 +50,12 @@ export class DocsListComponent implements OnInit {
         });
 
         docs.forEach(element => {
-          this.docsAvailable.push(element);
+          if ( element.active ) {
+            this.docsAvailable.push(element);
+          }
         });
+
+        this.groups = Array.from(new Set(this.docsAvailable.map(({group}) => group)));
 
       },
       err => {

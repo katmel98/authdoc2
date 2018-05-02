@@ -30,7 +30,11 @@
                               </optgroup>
                           </select>-->
                           <select class="form-control show-tick" #d (change)="onChange($event.target.value)">
-                            <option *ngFor="let doc of docsAvailable" [value]="doc.url">{{doc.name}}</option>                          
+                              <optgroup *ngFor="let group of groups" label={{group}}>
+                                    <ng-container *ngFor="let doc of docsAvailable">
+                                        <option *ngIf="doc.group === group" [value]="doc.url">{{doc.name}}</option>                          
+                                    </ng-container>  
+                              </optgroup>
                           </select>  
                       </div>    
                     </div>

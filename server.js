@@ -39,8 +39,8 @@ const app = new express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-console.log(nconf.get('auth:DEFAULT_DOCS_DIRECTORY'));
-app.use(express.static(path.join(nconf.get('auth:DEFAULT_DOCS_DIRECTORY'))));
+console.log(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'));
+app.use(express.static(path.join(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'))));
 app.use(cookieParser());  
 app.use(session({  
   secret: nconf.get('auth:SESSION_SECRET'),
@@ -129,7 +129,7 @@ app.get('/logout',
 
   app.post('/documents',  
   function(req, res) {
-    app.use(express.static(path.join(nconf.get('auth:DEFAULT_DOCS_DIRECTORY'))));
+    app.use(express.static(path.join(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'))));
     var doc = req.body.url;
     // console.log(doc);
     res.redirect(doc);
@@ -164,7 +164,7 @@ app.get('/logout',
             );
         }
     });
-    
+
   });
 
 // Force authentication for the next routes.
