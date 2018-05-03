@@ -35,7 +35,7 @@ export class DocsListComponent implements OnInit {
     this.documentationService.getDocs()
     .subscribe(
       data => {
-        // console.log(data);
+        console.log(data);
 
         const docs = data[0].documentation;
 
@@ -62,7 +62,7 @@ export class DocsListComponent implements OnInit {
         console.error(err);
       },
       () => {
-        // console.log('done loading docs');
+        console.log('done loading docs');
       }
     );
   }
