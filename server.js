@@ -21,8 +21,8 @@ nconf.argv()
 /** Create the uri object to be used to create the connection */
 var uri = util.format('mongodb://%s:%s@%s:%d/%s',
     nconf.get('db:USER'), nconf.get('db:PASS'), nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
-console.log(uri);
-console.log('\n');
+//console.log(uri);
+//console.log('\n');
 
 // Initialize authentication.
 passport.use(new Auth0Strategy({  
