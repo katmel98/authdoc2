@@ -19,8 +19,8 @@ nconf.argv()
   .file({file: './backend/app/config.json' });
 
 /** Create the uri object to be used to create the connection */
-var uri = util.format('mongodb://%s:%d/%s',
-    nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
+var uri = util.format('mongodb://%s:%s@%s:%d/%s',
+    nconf.get('db:USER'), nconf.get('db:PASS'), nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
 
 // Initialize authentication.
 passport.use(new Auth0Strategy({  
