@@ -10,11 +10,14 @@ import { FormsModule } from '@angular/forms';
 
 import { Logger } from './logger.service';
 import { DocumentationService } from './documentation.service';
+import { DocumentationResolver } from './documentation-resolver.service';
 
 const appRoutes: Routes = [
   { path: '',
     component: DocsListComponent,
-    data: { }
+    resolve: {
+      docs: DocumentationResolver
+    }
   }
 ];
 
@@ -34,8 +37,11 @@ const appRoutes: Routes = [
   ],
   providers: [
     Logger,
-    DocumentationService
+    DocumentationService,
+    DocumentationResolver
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

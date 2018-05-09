@@ -14,7 +14,8 @@ export class DocumentationService {
     private http: HttpClient,
     private logger: Logger) { }
 
-  getDocs() {
+  getDocs(): Observable<any> {
+    console.log('IMPRESION DESDE EL SERVICIO ...');
     return this.http.get('documents');
   }
 

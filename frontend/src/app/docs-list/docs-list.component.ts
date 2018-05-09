@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import swal from 'sweetalert2';
 import { DocumentationService } from '../documentation.service';
+import { Logger } from '../logger.service';
 
 @Component({
   selector: 'app-docs-list',
@@ -25,10 +26,10 @@ export class DocsListComponent implements OnInit {
               private documentationService: DocumentationService) { }
 
   ngOnInit() {
-
+    console.log('EJECUTADO EL INIT DE LA PAGINA');
     this.getDocs();
-
   }
+
 
   getDocs() {
 
@@ -56,13 +57,13 @@ export class DocsListComponent implements OnInit {
         });
 
         this.groups = Array.from(new Set(this.docsAvailable.map(({group}) => group)));
-
+        console.log('done loading docs');
       },
       err => {
         console.error(err);
       },
       () => {
-        console.log('done loading docs');
+        console.log('data loaded!');
       }
     );
   }
