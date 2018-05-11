@@ -22,8 +22,8 @@ nconf.argv()
     var uri = util.format('mongodb://%s:%s@%s:%d/%s',
         nconf.get('db:USER'), nconf.get('db:PASS'), nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
 
-    //var uri = util.format('mongodb://%s:%d/%s',
-    //nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
+    // var uri = util.format('mongodb://%s:%d/%s',
+    // nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
 
 
 //console.log(uri);

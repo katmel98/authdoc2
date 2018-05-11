@@ -13,6 +13,9 @@ export class DocumentationResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         console.log('EJECUTANDO EL OBSERVABLE ...');
-        return this.documentationService.getDocs().map(user => {});
+        return this.documentationService.getDocs().map(docs => {
+            console.log(docs);
+            return docs;
+        });
     }
 }

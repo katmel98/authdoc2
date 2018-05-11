@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Logger } from '../logger.service';
   templateUrl: './docs-list.component.html',
   styleUrls: ['./docs-list.component.css']
 })
-export class DocsListComponent implements OnInit {
+export class DocsListComponent implements OnInit, AfterContentInit {
 
   urlSelected = '';
   docsAvailable = [
@@ -26,10 +26,18 @@ export class DocsListComponent implements OnInit {
               private documentationService: DocumentationService) { }
 
   ngOnInit() {
-    console.log('EJECUTADO EL INIT DE LA PAGINA');
-    this.getDocs();
+    // console.log('EJECUTADO EL INIT DE LA PAGINA');
+    // this.getDocs();
+
+    // this.docsAvailable = this.route.snapshot.data['docs'];
+    // console.log(this.docsAvailable);
   }
 
+  ngAfterContentInit() {
+    console.log('EJECUTADO EL AFTER CONTENT INIT DE LA PAGINA');
+    this.getDocs();
+
+  }
 
   getDocs() {
 
