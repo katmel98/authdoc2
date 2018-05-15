@@ -12,13 +12,15 @@ import { Logger } from '../logger.service';
   templateUrl: './docs-list.component.html',
   styleUrls: ['./docs-list.component.css']
 })
-export class DocsListComponent implements OnInit, AfterContentInit {
+export class DocsListComponent implements OnInit {
 
   urlSelected = '';
-  docsAvailable = [
+  docsAvailable: Array<any> = [
     {name: 'Seleccione una opción ...', url: '', group: '', order: 0},
   ];
-  groups = [];
+  groups: Array<any> = [];
+  loadComplete = false;
+
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -26,17 +28,11 @@ export class DocsListComponent implements OnInit, AfterContentInit {
               private documentationService: DocumentationService) { }
 
   ngOnInit() {
-    // console.log('EJECUTADO EL INIT DE LA PAGINA');
-    // this.getDocs();
-
-    // this.docsAvailable = this.route.snapshot.data['docs'];
-    // console.log(this.docsAvailable);
-  }
-
-  ngAfterContentInit() {
-    console.log('EJECUTADO EL AFTER CONTENT INIT DE LA PAGINA');
+    console.log('EJECUTADO EL INIT DE LA PAGINA');
     this.getDocs();
 
+    // this.docsAvailable = this.route.snapshot.data['docs'];
+    console.log(this.docsAvailable);
   }
 
   getDocs() {
@@ -65,9 +61,13 @@ export class DocsListComponent implements OnInit, AfterContentInit {
         });
 
         this.groups = Array.from(new Set(this.docsAvailable.map(({group}) => group)));
+
+        this.loadComplete = true;
         console.log('done loading docs');
       },
       err => {
+        this.loadComplete = true;
+
         console.error(err);
       },
       () => {
@@ -119,7 +119,7 @@ export class DocsListComponent implements OnInit, AfterContentInit {
   }
 
   onChange(value) {
-    // console.log(value);
+    console.log(value);
     this.urlSelected = value;
   }
 }

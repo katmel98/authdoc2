@@ -14,17 +14,43 @@ var client = mongodb.MongoClient;
 var myuser;
   
 // Initialize configuration.
-nconf.argv()
-  .env()
-  .file({file: './backend/app/config.json' });
+    nconf.argv()
+    .env()
+    .file({file: './backend/app/config.json' });
+
+    var debugging = nconf.get('debug');
 
 /** Create the uri object to be used to create the connection */
-    var uri = util.format('mongodb://%s:%s@%s:%d/%s',
-        nconf.get('db:USER'), nconf.get('db:PASS'), nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
+    var uri = null;
+    var values = nconf.get('db_selected');
 
-    // var uri = util.format('mongodb://%s:%d/%s',
-    // nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
+    if(debugging) {
+        console.log("INFORMACION DE DATABASE SELECCIONADA: ");
+        console.log(values);
+    }
 
+    var dbs_data = nconf.get('dbs:' + values);
+
+    if(debugging){
+        console.log("INFORMACIÓN DATOS DE DATABASE SELECCIONADA: ");
+        console.log(dbs_data);
+        console.log("EL VALOR DEL USER ES: ");
+        console.log(dbs_data['USER']);
+    }
+
+    if(dbs_data['USER']===""){
+        uri = util.format('%s://%s:%d/%s',
+            dbs_data['PROTOCOL'], dbs_data['HOST'], dbs_data['PORT'], dbs_data['DATABASE']);    
+    }else{
+        if(debugging) console.log(dbs_data['PROTOCOL']);
+        if(dbs_data['PROTOCOL']=='mongodb+srv'){
+            uri = util.format('%s://%s:%s@%s/%s',
+                dbs_data['PROTOCOL'], dbs_data['USER'], dbs_data['PASS'], dbs_data['HOST'], dbs_data['DATABASE']);        
+        }else{
+            uri = util.format('%s://%s:%s@%s:%d/%s',
+                dbs_data['PROTOCOL'], dbs_data['USER'], dbs_data['PASS'], dbs_data['HOST'], dbs_data['PORT'], dbs_data['DATABASE']);
+        }
+    }
 
 //console.log(uri);
 //console.log('\n');
@@ -46,7 +72,7 @@ const app = new express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-console.log(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'));
+//console.log(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'));
 app.use(express.static(path.join(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'))));
 app.use(cookieParser());  
 app.use(session({  
@@ -85,8 +111,10 @@ app.get('/login/callback',
             else if (!db) console.log('Unknown error connecting to database');
             else {
 
-                console.log('Connected to MongoDB database server at:');
-                console.log('\n\t%s\n', uri);
+                if(debugging){
+                    console.log('Connected to MongoDB database server at:');
+                    console.log('\n\t%s\n', uri);
+                }
 
                 var dbo = db.db("authdoc");
 
@@ -98,21 +126,21 @@ app.get('/login/callback',
                         if (err) throw err;
 
                         if(result.length==0){
-                            console.log("No data for the user: " + myuser);
+                            // console.log("No data for the user: " + myuser);
                             res.redirect('/login');
                         }else if (result.length==1){
-                            console.log("Number of documentations available for this user: " + result[0].documentation.length);
+                            if(debugging) console.log("Number of documentations available for this user: " + result[0].documentation.length);
                             if(result[0].documentation.length == 1){
                                 let obj = result[0].documentation[0];
                                 res.redirect(obj.url);     
                             }else if(result[0].documentation.length > 1){
-                                console.log(result[0]);
-                                console.log("This user has multiple documentations options please select one.");
+                                if(debugging) console.log(result[0]);
+                                if(debugging) console.log("This user has multiple documentations options please select one.");
                                 app.use('/', express.static(path.join(__dirname, '/frontend/dist')));
                                 res.redirect('/');
                             }
                         }else if (result.length>1){
-                            console.log("There are TWO records for this user. This is not a correct conf, please call your administrator");
+                            if(debugging) console.log("There are TWO records for this user. This is not a correct conf, please call your administrator");
                             res.redirect('/login');                            
                         }
                         db.close();
@@ -136,16 +164,18 @@ app.get('/logout',
 
   app.post('/documents',  
   function(req, res) {
+    if(debugging) console.log(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'));
     app.use(express.static(path.join(nconf.get('docs:DEFAULT_DOCS_DIRECTORY'))));
     var doc = req.body.url;
-    // console.log(doc);
+    if(debugging) console.log("LA DIRECCION DE LA DOCUMENTACION");
+    if(debugging) console.log(doc);
     res.redirect(doc);
   });
 
   app.get('/documents',  
   function(req, res) {
-    console.log(uri);
-    console.log('\n');
+    if(debugging) console.log(uri);
+    if(debugging) console.log('\n');
     client.connect(uri, { auto_reconnect: true }, function (err, db) {
         if (err) {
             throw err;
@@ -166,9 +196,9 @@ app.get('/logout',
                         console.log(err);
                         db.close();
                     }
-		    console.log("EL USUARIO");
-                    console.log(result);
-		    res.json(result);
+                    if(debugging) console.log("EL USUARIO");
+                    if(debugging) console.log(result);
+		            res.json(result);
                     db.close();
                 }
             );
@@ -191,6 +221,7 @@ app.listen(port, function(error) {
   if (error) {
     console.log(error);
   } else {
-    console.log('Listening on ' + nconf.get('db:HOST') + ':' + port);
+    console.log('Listening on ' + dbs_data['HOST'] + ':' + port);
+    console.log('System started!!!!')
   }
 });

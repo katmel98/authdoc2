@@ -14,10 +14,7 @@ import { DocumentationResolver } from './documentation-resolver.service';
 
 const appRoutes: Routes = [
   { path: '',
-    component: DocsListComponent,
-    resolve: {
-      docs: DocumentationResolver
-    }
+    component: DocsListComponent
   }
 ];
 
