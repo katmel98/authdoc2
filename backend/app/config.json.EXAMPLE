@@ -6,14 +6,35 @@
         "SESSION_SECRET": <AUTH0 SESSION SECRET>,
         "AUTH0_CONNECTION": ""
     },
-    "db": {
-        "USER" : <YOUR DATABASE USERNAME>,
-        "PASS" : <YOUR DATABASE PASSWORD>,
-        "HOST" : <YOUR HOSTNAME OR HOST IP ADDRESS>,
-        "PORT" : "<CONNECTION PORT",
-        "DATABASE" : <DATABASE NAME>
-    },
     "docs": {
         "DEFAULT_DOCS_DIRECTORY": <DOCUMENTATION ROOT DIRECTORY>
-    }
+    },
+    "db_selected": <SELECTED DB CONNECTION>,
+    "dbs": {
+        <DATABASE CONNECTION NAME>: {
+            "PROTOCOL": <DATABASE PROTOCOL TO BE USED>,
+            "USER" : <YOUR DATABASE USERNAME>,
+            "PASS" : <YOUR DATABASE PASSWORD>,
+            "HOST" : <YOUR HOSTNAME OR HOST IP ADDRESS>,
+            "PORT" : "<CONNECTION PORT",
+            "DATABASE" : <DATABASE NAME>
+        },
+        <DATABASE CONNECTION NAME>: {
+            "PROTOCOL": <DATABASE PROTOCOL TO BE USED>,
+            "USER" : <YOUR DATABASE USERNAME>,
+            "PASS" : <YOUR DATABASE PASSWORD>,
+            "HOST" : <YOUR HOSTNAME OR HOST IP ADDRESS>,
+            "PORT" : "<CONNECTION PORT",
+            "DATABASE" : <DATABASE NAME>
+        },
+        <DATABASE CONNECTION NAME>: {
+            "PROTOCOL": <DATABASE PROTOCOL TO BE USED>,
+            "USER" : <YOUR DATABASE USERNAME>,
+            "PASS" : <YOUR DATABASE PASSWORD>,
+            "HOST" : <YOUR HOSTNAME OR HOST IP ADDRESS>,
+            "PORT" : "<CONNECTION PORT",
+            "DATABASE" : <DATABASE NAME>
+        }
+    },
+    "debug": <BOOLEAN THAT IDENTIFIES IF CONSOLE LOGS SHOULD BE SHOWN>
 }
