@@ -1,16 +1,17 @@
-# **Authdoc** 
+# **Authdoc2** 
 
     (DEVELOPMENT IN PROGRESS ...)
 
 This package represents an approach of a documentation system using Daux.io BUT allowing user management using the Auth0 utility.
 
-It will be using the following tools:
+## **Components and Requirements**  
 
-1. *Auth0*
-1. *ExpressJS* (Backend tool to integrate required info to allow the Auth0 integration)
-1. *Angular2* (JS Framework to create the frontend)
-1. *Daux.io* (Markdown documentation server)
-1. *MongoDB* (as DBMS to store the users info to allow the correct redirection once loggedin)  
+1. **_Auth0_**
+1. **_NodeJS_** (Javascript Runtime Framework)
+1. **_ExpressJS_** (Backend tool to integrate required info to allow the Auth0 integration)
+1. **_Angular2_** (JS Framework to create the frontend)
+1. **_Daux.io_** (Markdown documentation server)
+1. **_MongoDB_** (as DBMS to store the users info to allow the correct redirection once loggedin)  
 
 ## **Project Directory Structure**
 
@@ -68,7 +69,7 @@ The structure explanation:
 
 ### **_AUTH0_**
 
-1. Create an account in [Auth0](https://auth0.com) service (could be a free one).
+1. Create an account in **_[Auth0](https://auth0.com)_** service (could be a free one).
 1. Obtain the data required to allow the connection between the Auth0 service and Authdoc2:  
 
     * AUTH0_DOMAIN
@@ -80,36 +81,38 @@ The structure explanation:
 ### **_AUTHDOC2_**  
 
 1. Clone the project in your prefered directory:  
-`git clone https://github.com/katmel98/authdoc2.git`  
+**`git clone https://github.com/katmel98/authdoc2.git`**  
 1. Get into authdoc2 documentation directory:  
-`cd authdoc2` 
+**`cd authdoc2`**
 1. Install all packages requirements:  
-`npm install`
+**`npm install`**
 1. Create a new _config.json_ file from _config.json.EXAMPLE_:  
-`cp backend/app/config.json.EXAMPLE backend/app/config.json`
+**`cp backend/app/config.json.EXAMPLE backend/app/config.json`**
 1. Configure the file following filling attributes with your desired values.
 
 ### **_ANGULAR2+_**  
 
 1. Install globally Angular-cli:  
-`npm install -g @angular/cli` 
+**`npm install -g @angular/cli`**
 1. Get into frontend directory:  
-`cd frontend`
+**`cd frontend`**
 1. Install all Angular requirements:  
-`npm install`
+**`npm install`**
 1. Build the distribution directory:  
-`ng build`
+**`ng build`**
 
 ### **_DAUX.IO_**  
 
-    (UNDER DEVELOPMENT)
+**_[Daux.io](https://dauxio.github.io)_** is a documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
+
+It allows you to create a static content from Markdown documentation. You can generate n-number of documentations with this tool, it'll be necessary to take the static content into a root directory predefined that will has the different documentations in it and will work as documentation's origin folder.
 
 ### **_MONGODB_**
 
 MongoDB is the DBMS selected to manage the user/documentation assignment. This database could be a localhost installation or a cloud installation. In order to use the database, a script _"initdb.js"_ is provided.
 
 1. Execute the _"initdb.js"_ script:  
-`node backend/resources/initdb.js`  
+**`node backend/resources/initdb.js`**  
 
 1. Check data generated in your MongoDB instance.  
 
@@ -124,3 +127,4 @@ MongoDB is the DBMS selected to manage the user/documentation assignment. This d
             * _**group**_: (_type: String_) group name to be used in order to allow different documentations to be organized.  
             * _**order**_: (_type: Number_) order to be used when creating a dropdown to allow the user select documentation to be read.  
             * _**active**_: (_type: Boolean_) this parameter indicates if the documentation will be accesible to the user.  
+
