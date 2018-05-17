@@ -1,6 +1,6 @@
 # **Authdoc** 
 
-    Documentation in progress
+    (DEVELOPMENT IN PROGRESS ...)
 
 This package represents an approach of a documentation system using Daux.io BUT allowing user management using the Auth0 utility.
 
@@ -100,7 +100,9 @@ The structure explanation:
 1. Build the distribution directory:  
 `ng build`
 
-### **_DAUX.IO_**
+### **_DAUX.IO_**  
+
+    (UNDER DEVELOPMENT)
 
 ### **_MONGODB_**
 
@@ -113,7 +115,7 @@ MongoDB is the DBMS selected to manage the user/documentation assignment. This d
 
 1. Create users and relations in __User Collection__, using the following structure:  
     * __name__: (_type: String_) user email used as login username in the Auth0 service.
-    * __documentation__: (_type: Array_)  
+    * __documentation__: (_type: Array_) Object's array to identify all the documentations related to an user ...
 
         * __Element__: (_type: Object_)  
 
