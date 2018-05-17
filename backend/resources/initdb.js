@@ -9,10 +9,40 @@ nconf.argv()
   .env()
   .file({file: './backend/app/config.json' });
 
-/** Create the uri object to be used to create the connection */
-var uri = util.format('mongodb://%s:%s@%s:%d/%s',
-    nconf.get('db:USER'), nconf.get('db:PASS'), nconf.get('db:HOST'), nconf.get('db:PORT'), nconf.get('db:DATABASE'));
+  var debugging = nconf.get('debug');
 
+  /** Create the uri object to be used to create the connection */
+      var uri = null;
+      var values = nconf.get('db_selected');
+  
+      if(debugging) {
+          console.log("INFORMACION DE DATABASE SELECCIONADA: ");
+          console.log(values);
+      }
+  
+      var dbs_data = nconf.get('dbs:' + values);
+  
+      if(debugging){
+          console.log("INFORMACIÓN DATOS DE DATABASE SELECCIONADA: ");
+          console.log(dbs_data);
+          console.log("EL VALOR DEL USER ES: ");
+          console.log(dbs_data['USER']);
+      }
+  
+      if(dbs_data['USER']===""){
+          uri = util.format('%s://%s:%d/%s',
+              dbs_data['PROTOCOL'], dbs_data['HOST'], dbs_data['PORT'], dbs_data['DATABASE']);    
+      }else{
+          if(debugging) console.log(dbs_data['PROTOCOL']);
+          if(dbs_data['PROTOCOL']=='mongodb+srv'){
+              uri = util.format('%s://%s:%s@%s/%s',
+                  dbs_data['PROTOCOL'], dbs_data['USER'], dbs_data['PASS'], dbs_data['HOST'], dbs_data['DATABASE']);        
+          }else{
+              uri = util.format('%s://%s:%s@%s:%d/%s',
+                  dbs_data['PROTOCOL'], dbs_data['USER'], dbs_data['PASS'], dbs_data['HOST'], dbs_data['PORT'], dbs_data['DATABASE']);
+          }
+      }
+      
 console.log(uri);
 console.log('\n');
 
