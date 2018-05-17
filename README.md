@@ -26,26 +26,7 @@ This package represents an approach of a documentation system using Daux.io BUT 
     |   +-- resources
     |   |   +-- initdb.js
     +-- frontend  
-    |   +-- dist
-    |   |   +-- ...
-    |   +-- e2e
-    |   |   +-- ...
-    |   +-- node_modules
-    |   |   +-- ...
-    |   +-- src
-    |   |   +-- ...
-    |   +-- .angular-cli.json
-    |   +-- .editorconfig
-    |   +-- .gitignore
-    |   +-- karma.conf.js
-    |   +-- package-lock.json
-    |   +-- package.json
-    |   +-- protractor.conf.js
-    |   +-- README.md
-    |   +-- tsconfig.json
-    |   +-- tslint.json
     +-- node_modules
-    |   +-- ...
     +-- .gitignore  
     +-- LICENSE  
     +-- package-lock.json  
@@ -65,7 +46,7 @@ The structure explanation:
 * __README.md__: documentation file.
 * __server.js__: software initialization script.  
 
-## **INSTALLATION PROCESS**
+## **Installation Process**
 
 ### **_AUTH0_**
 
@@ -105,7 +86,7 @@ The structure explanation:
 
 **_[Daux.io](https://dauxio.github.io)_** is a documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
 
-It allows you to create a static content from Markdown documentation. You can generate n-number of documentations with this tool, it'll be necessary to take the static content into a root directory predefined that will has the different documentations in it and will work as documentation's origin folder.
+It allows you to create a static content from Markdown documentation. You can generate n-number of documentations with this tool, it'll be necessary to take the static content into a predefined docs directory that will contains different packages docs in it and will be used as documentation's origin folder.
 
 ### **_MONGODB_**
 
